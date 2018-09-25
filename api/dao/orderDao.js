@@ -3,7 +3,7 @@ var helper = require('./../helper/helper');
 function _create(params, callBackOk, callBackError) {
   let procedures = [
     {
-      procedure: 'INSERT INTO orders(name, description) values($1, $2)',
+      procedure: 'INSERT INTO orders(name, description, count) values($1, $2, $3)',
       parameters: params
     }
   ];
@@ -18,7 +18,7 @@ function _read(callBackOk, callBackError) {
 function _update(params, callBackOk, callBackError) {
   let procedures = [
     {
-      procedure: 'UPDATE orders set name = $1, description = $2 where id = $3',
+      procedure: 'UPDATE orders set name = $1, description = $2, count = $3 where id = $4',
       parameters: params
     }
   ];
@@ -35,7 +35,12 @@ function _delete(params, callBackOk, callBackError) {
   helper.transaction(procedures, callBackOk, callBackError);
 }
 
+function _import(procedures, callBackOk, callBackError) {
+  helper.transaction(procedures, callBackOk, callBackError);
+}
+
 exports.create = _create;
 exports.read = _read;
 exports.update = _update;
 exports.delete = _delete;
+exports.import = _import;

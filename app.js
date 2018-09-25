@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const orderRoutes = require("./api/routes/orders");
 
 app.use(morgan("dev"));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -29,9 +29,10 @@ app.use("/orders", orderRoutes);
 // Validate
 app.use((req, res, next) => {
   res.status(404);
+  let url = req.protocol + '://' + req.get('host') + req.originalUrl;
   res.json({
     error: {
-      message: 'The requested URL [URL] was not found on this server'
+      message: 'The requested URL [' + url + '] was not found on this server'
     }
   });
 });
